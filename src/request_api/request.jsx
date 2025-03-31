@@ -3,7 +3,7 @@ import axios from "axios";
 export const addSurveyRequest = async (newSurvey) => {
     console.log(newSurvey);
     try {
-      const response = await axios.post("http://192.168.0.126:5000/survey", newSurvey, {
+      const response = await axios.post("https://encuestaapi.onrender.com/survey", newSurvey, {
         headers: {
           "Content-Type": "application/json",
         },
