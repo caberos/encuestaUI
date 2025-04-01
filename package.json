@@ -13,7 +13,9 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.4.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "camelcase": "^7.0.0",
+    "serve": "^14.2.0"
   },
   "scripts": {
     "start": "BROWSER=none react-scripts start",
@@ -30,7 +32,6 @@
     "development": ["last 2 Chrome versions", "last 2 Firefox versions", "last 2 Safari versions"]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "serve": "^14.2.0"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
