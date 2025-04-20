@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { format } from "date-fns";
 
 export default function ElectoralSurvey() {
   const navigate = useNavigate();
@@ -18,8 +17,16 @@ export default function ElectoralSurvey() {
   ];
 
   const cities = [
-    "La Paz", "El Alto", "Cochabamba", "Oruro", "Potosí",
-    "Chuquisaca", "Tarija", "Beni", "Pando", "Santa Cruz",
+    "La Paz",
+    "El Alto",
+    "Cochabamba",
+    "Oruro",
+    "Potosí",
+    "Chuquisaca",
+    "Tarija",
+    "Beni",
+    "Pando",
+    "Santa Cruz",
   ];
 
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -29,42 +36,16 @@ export default function ElectoralSurvey() {
     department: "",
   });
 
-  const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error("Error cargando anuncio:", e);
-    }
-  }, []);
-
-  const validateForm = () => {
-    let newErrors = {};
-
-    if (!selectedCandidate) newErrors.candidate = "Debe seleccionar un candidato.";
-    if (!voterData.ci || !/^\d{4,}$/.test(voterData.ci))
-      newErrors.ci = "C.I. inválido (mínimo 4 dígitos numéricos).";
-    const age = parseInt(voterData.age, 10);
-    if (!voterData.age || isNaN(age) || age < 18 || age > 120)
-      newErrors.age = "Edad inválida (debe ser mayor de 18).";
-    if (!voterData.department) newErrors.department = "Seleccione un departamento.";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleVote = async () => {
-    if (!validateForm()) return;
+    if (!selectedCandidate || !voterData.ci || !voterData.age || !voterData.department) {
+      alert("Por favor, complete todos los campos antes de votar.");
+      return;
+    }
 
-    const voteData = {
-      candidato: selectedCandidate.name,
-      votante: voterData,
-      date: format(new Date(), "dd-MM-yyyy"),
-    };
+    const voteData = { candidato: selectedCandidate.name, votante: voterData };
 
     try {
-      const response = await fetch("https://encuestaapi.onrender.com/survey", {
+      const response = await fetch("http://localhost:5000/survey", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(voteData),
@@ -74,43 +55,42 @@ export default function ElectoralSurvey() {
         alert("✅ Votación registrada con éxito.");
         navigate("/resultado", { state: voteData });
       } else if (response.status === 409) {
-        alert("⚠️ Este C.I. ya fue registrado anteriormente.");
+        alert("⚠️ Error: Este C.I. ya ha votado.");
       } else {
-        alert("❌ Error al guardar. Intente nuevamente.");
+        alert("❌ Error al registrar el voto. Inténtelo de nuevo.");
       }
     } catch (error) {
-      alert("❌ No se pudo conectar al servidor.");
-      console.error(error);
+      alert("❌ Error de conexión con el servidor.");
+      console.error("Error:", error);
     }
   };
 
   return (
     <div className="container mt-4">
-      <h1 className="text-center text-2xl fw-bold mb-2">
+      <h1 className="text-center text-2xl font-bold">
         Elecciones Generales Bolivia 2025
       </h1>
-      <p className="text-center text-muted mb-4">
-        Esta encuesta es anónima y con fines estadísticos. No representa resultados oficiales.
-      </p>
-
-      <div className="d-flex justify-content-center mb-4">
-        <ins
-          className="adsbygoogle"
-          style={{ display: "block" }}
-          data-ad-client="ca-pub-7727148443229606"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
-      </div>
-
-      <h4 className="text-center mt-3 text-lg">
+      <h4 className="text-center mt-2 text-lg">
         Si hoy fueran las elecciones, ¿por quién votaría?
       </h4>
 
-      <div className="row mt-4">
-        {/* Lista de candidatos */}
+      {/* Sección de contexto e información para cumplir con políticas */}
+      <div className="alert alert-info mt-4">
+        <h5>Sobre esta encuesta</h5>
+        <p>
+          Esta es una encuesta simulada sin fines partidarios ni comerciales. Busca recolectar datos anónimos para analizar la intención de voto de cara a las Elecciones Generales de Bolivia 2025.
+        </p>
+        <p>
+          Todos los datos ingresados son confidenciales y no serán utilizados con fines publicitarios y politicos.
+        </p>
+      </div>
+
+      <div className="row mt-5">
+        {/* Candidatos */}
         <div className="col-md-6 mt-3 d-flex flex-column align-items-center">
-          <h2 className="text-xl fw-semibold mb-2">Seleccione un candidato</h2>
+          <h2 className="text-xl font-semibold mb-2 text-center">
+            Seleccione un candidato
+          </h2>
           <table className="table table-bordered">
             <thead className="table-light">
               <tr>
@@ -124,9 +104,7 @@ export default function ElectoralSurvey() {
                   <td className="text-center">{candidate.name}</td>
                   <td className="text-center">
                     <button
-                      className={`btn btn-${
-                        selectedCandidate === candidate ? "primary" : "secondary"
-                      }`}
+                      className={`btn btn-${selectedCandidate === candidate ? "primary" : "secondary"}`}
                       onClick={() => setSelectedCandidate(candidate)}
                     >
                       {selectedCandidate === candidate ? "Seleccionado" : "Seleccionar"}
@@ -136,12 +114,13 @@ export default function ElectoralSurvey() {
               ))}
             </tbody>
           </table>
-          {errors.candidate && <p className="text-danger mt-1">{errors.candidate}</p>}
         </div>
 
         {/* Datos del votante */}
         <div className="col-md-6 mt-3 d-flex flex-column align-items-center">
-          <h2 className="text-xl fw-semibold mb-2">Datos del Votante</h2>
+          <h2 className="text-xl font-semibold mb-2 text-center">
+            Datos del Votante
+          </h2>
 
           <div className="mb-3 w-75">
             <label htmlFor="ci" className="form-label">C.I.</label>
@@ -150,12 +129,9 @@ export default function ElectoralSurvey() {
               id="ci"
               placeholder="C.I"
               value={voterData.ci}
-              onChange={(e) =>
-                setVoterData({ ...voterData, ci: e.target.value })
-              }
-              className={`form-control text-center ${errors.ci ? "is-invalid" : ""}`}
+              onChange={(e) => setVoterData({ ...voterData, ci: e.target.value })}
+              className="form-control text-center"
             />
-            {errors.ci && <div className="invalid-feedback">{errors.ci}</div>}
           </div>
 
           <div className="mb-3 w-75">
@@ -165,34 +141,34 @@ export default function ElectoralSurvey() {
               id="age"
               placeholder="Edad"
               value={voterData.age}
-              onChange={(e) =>
-                setVoterData({ ...voterData, age: e.target.value })
-              }
-              className={`form-control text-center ${errors.age ? "is-invalid" : ""}`}
+              onChange={(e) => setVoterData({ ...voterData, age: e.target.value })}
+              className="form-control text-center"
             />
-            {errors.age && <div className="invalid-feedback">{errors.age}</div>}
           </div>
 
           <div className="w-75">
-            <label htmlFor="department" className="form-label">Departamento:</label>
+            <label htmlFor="department" className="form-label">Departamento</label>
             <select
               id="department"
-              className={`form-control text-center ${errors.department ? "is-invalid" : ""}`}
+              className="form-control text-center"
               value={voterData.department}
-              onChange={(e) =>
-                setVoterData({ ...voterData, department: e.target.value })
-              }
+              onChange={(e) => setVoterData({ ...voterData, department: e.target.value })}
             >
               <option value="">Selecciona una opción</option>
               {cities.map((city, index) => (
-                <option key={index} value={city}>{city}</option>
+                <option key={index} value={city}>
+                  {city}
+                </option>
               ))}
             </select>
-            {errors.department && <div className="invalid-feedback">{errors.department}</div>}
           </div>
 
           <div className="text-center">
-            <button type="button" className="btn btn-success mt-4" onClick={handleVote}>
+            <button
+              type="button"
+              className="btn btn-success mt-4"
+              onClick={handleVote}
+            >
               Votar y Guardar
             </button>
           </div>
