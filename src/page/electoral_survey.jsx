@@ -17,16 +17,8 @@ export default function ElectoralSurvey() {
   ];
 
   const cities = [
-    "La Paz",
-    "El Alto",
-    "Cochabamba",
-    "Oruro",
-    "Potosí",
-    "Chuquisaca",
-    "Tarija",
-    "Beni",
-    "Pando",
-    "Santa Cruz",
+    "La Paz", "El Alto", "Cochabamba", "Oruro", "Potosí", 
+    "Chuquisaca", "Tarija", "Beni", "Pando", "Santa Cruz"
   ];
 
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -55,13 +47,13 @@ export default function ElectoralSurvey() {
         alert("✅ Votación registrada con éxito.");
         navigate("/resultado", { state: voteData });
       } else if (response.status === 409) {
-        alert("⚠️ Error: Este C.I. ya ha votado.");
+        alert("⚠️ Este C.I. ya ha votado.");
       } else {
-        alert("❌ Error al registrar el voto. Inténtelo de nuevo.");
+        alert("❌ Error al registrar el voto.");
       }
     } catch (error) {
-      alert("❌ Error de conexión con el servidor.");
-      console.error("Error:", error);
+      alert("❌ Error de conexión.");
+      console.error(error);
     }
   };
 
@@ -70,23 +62,22 @@ export default function ElectoralSurvey() {
       <h1 className="text-center text-2xl font-bold">
         Elecciones Generales Bolivia 2025
       </h1>
-      <h4 className="text-center mt-2 text-lg">
-        Si hoy fueran las elecciones, ¿por quién votaría?
-      </h4>
+      <p className="text-center mt-2">
+        Esta encuesta busca reflejar la opinión ciudadana de forma anónima y sin afiliación política.
+      </p>
 
-      {/* Sección de contexto e información para cumplir con políticas */}
       <div className="alert alert-info mt-4">
         <h5>Sobre esta encuesta</h5>
         <p>
-          Esta es una encuesta simulada sin fines partidarios ni comerciales. Busca recolectar datos anónimos para analizar la intención de voto de cara a las Elecciones Generales de Bolivia 2025.
+          Esta es una simulación de encuesta pública sin fines partidarios ni comerciales. 
+          Los datos son recolectados con fines estadísticos y de análisis.
         </p>
         <p>
-          Todos los datos ingresados son confidenciales y no serán utilizados con fines publicitarios y politicos.
+          No almacenamos datos personales identificables ni los usamos para publicidad.
         </p>
       </div>
 
       <div className="row mt-5">
-        {/* Candidatos */}
         <div className="col-md-6 mt-3 d-flex flex-column align-items-center">
           <h2 className="text-xl font-semibold mb-2 text-center">
             Seleccione un candidato
@@ -100,12 +91,16 @@ export default function ElectoralSurvey() {
             </thead>
             <tbody>
               {candidates.map((candidate, index) => (
-                <tr key={index}>
+                <tr
+                  key={index}
+                  className={selectedCandidate === candidate ? "table-primary" : ""}
+                >
                   <td className="text-center">{candidate.name}</td>
                   <td className="text-center">
                     <button
                       className={`btn btn-${selectedCandidate === candidate ? "primary" : "secondary"}`}
                       onClick={() => setSelectedCandidate(candidate)}
+                      aria-label={`Seleccionar a ${candidate.name}`}
                     >
                       {selectedCandidate === candidate ? "Seleccionado" : "Seleccionar"}
                     </button>
@@ -116,21 +111,19 @@ export default function ElectoralSurvey() {
           </table>
         </div>
 
-        {/* Datos del votante */}
         <div className="col-md-6 mt-3 d-flex flex-column align-items-center">
           <h2 className="text-xl font-semibold mb-2 text-center">
             Datos del Votante
           </h2>
-
           <div className="mb-3 w-75">
             <label htmlFor="ci" className="form-label">C.I.</label>
             <input
               type="text"
               id="ci"
-              placeholder="C.I"
+              className="form-control text-center"
               value={voterData.ci}
               onChange={(e) => setVoterData({ ...voterData, ci: e.target.value })}
-              className="form-control text-center"
+              placeholder="Número de Cédula"
             />
           </div>
 
@@ -139,10 +132,10 @@ export default function ElectoralSurvey() {
             <input
               type="number"
               id="age"
-              placeholder="Edad"
+              className="form-control text-center"
               value={voterData.age}
               onChange={(e) => setVoterData({ ...voterData, age: e.target.value })}
-              className="form-control text-center"
+              placeholder="Edad"
             />
           </div>
 
@@ -156,24 +149,24 @@ export default function ElectoralSurvey() {
             >
               <option value="">Selecciona una opción</option>
               {cities.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
+                <option key={index} value={city}>{city}</option>
               ))}
             </select>
           </div>
 
           <div className="text-center">
-            <button
-              type="button"
-              className="btn btn-success mt-4"
-              onClick={handleVote}
-            >
+            <button className="btn btn-success mt-4" onClick={handleVote}>
               Votar y Guardar
             </button>
           </div>
         </div>
       </div>
+
+      <footer className="mt-5 text-center">
+        <a href="/privacy" target="_blank" rel="noopener noreferrer">
+          Política de Privacidad
+        </a>
+      </footer>
     </div>
   );
 }
