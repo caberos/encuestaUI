@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AdBanner from "../components/ad_banner.jsx";
 
 export default function ElectoralSurvey() {
   const navigate = useNavigate();
@@ -115,6 +116,8 @@ export default function ElectoralSurvey() {
           <h2 className="text-xl font-semibold mb-2 text-center">
             Datos del Votante
           </h2>
+          <AdBanner />
+
           <div className="mb-3 w-75">
             <label htmlFor="ci" className="form-label">C.I.</label>
             <input
