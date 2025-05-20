@@ -6,15 +6,17 @@ export default function ElectoralSurvey() {
   const navigate = useNavigate();
 
   const candidates = [
-    { name: "Manfred Reyes Villa", img: "https://via.placeholder.com/40" },
-    { name: "Chi Hyun Chung", img: "https://via.placeholder.com/40" },
-    { name: "Samuel Doria Medina", img: "https://via.placeholder.com/40" },
-    { name: "Jorge Tuto Quiroga", img: "https://via.placeholder.com/40" },
-    { name: "Carlos Mesa", img: "https://via.placeholder.com/40" },
-    { name: "Luis Arce Catacora", img: "https://via.placeholder.com/40" },
-    { name: "Eva Copa", img: "https://via.placeholder.com/40" },
-    { name: "Otros", img: "https://via.placeholder.com/40" },
-    { name: "No Sabe/No Responde", img: "https://via.placeholder.com/40" },
+    { name: "Manfred Reyes Villa", img: "SUMATE" },
+    { name: "Andronico Rodriguez", img: "ALIANZA POPULAR" },
+    { name: "Samuel Doria Medina", img: "ALIANZA UNIDAD" },
+    { name: "Jorge Tuto Quiroga", img: "Alianza Libre" },
+    { name: "Jhonny Fernandez", img: "UCS" },
+    { name: "Paulo Rodriguez Folster", img: "ADN" },
+    { name: "Rodrigo Paz Pereira", img: "PDC" },
+    { name: "Eduardo del Castillo", img: "MAS" },
+    { name: "Jaime Dunn", img: "NUEVA GENERACION PATRIOTA" },
+    { name: "Eva Copa", img: "MORENA" },
+    { name: "No Sabe/No Responde", img: "NS/NR" },
   ];
 
   const cities = [
@@ -38,7 +40,7 @@ export default function ElectoralSurvey() {
     const voteData = { candidato: selectedCandidate.name, votante: voterData };
 
     try {
-      const response = await fetch("http://localhost:5000/survey", {
+      const response = await fetch("https://encuestaapi.onrender.com/survey", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(voteData),
@@ -67,41 +69,38 @@ export default function ElectoralSurvey() {
         Esta encuesta busca reflejar la opinión ciudadana de forma anónima y sin afiliación política.
       </p>
 
-      <div className="alert alert-info mt-4">
+      <div className="alert alert-info mt-1">
         <h5>Sobre esta encuesta</h5>
         <p>
-          Esta es una simulación de encuesta pública sin fines partidarios ni comerciales. 
-          Los datos son recolectados con fines estadísticos y de análisis.
-        </p>
-        <p>
+          Esta es una simulación de encuesta pública sin fines partidarios. 
+          Los datos son recolectados con fines educativo, estadísticos y de análisis.
+          <br />
           No almacenamos datos personales identificables ni los usamos para publicidad.
         </p>
       </div>
 
-      <div className="row mt-5">
-        <div className="col-md-6 mt-3 d-flex flex-column align-items-center">
+      <div className="row mt-1">
+        <div className="col-md-6 mt-2 d-flex flex-column align-items-center">
           <h2 className="text-xl font-semibold mb-2 text-center">
             Seleccione un candidato
           </h2>
           <table className="table table-bordered">
-            <thead className="table-light">
+            <thead className="table-light text-center">
               <tr>
+                <th>Partido Politico</th>
                 <th>Nombre</th>
                 <th>Seleccionar</th>
               </tr>
             </thead>
             <tbody>
               {candidates.map((candidate, index) => (
-                <tr
-                  key={index}
-                  className={selectedCandidate === candidate ? "table-primary" : ""}
-                >
+                <tr key={index} className="hover-bg-light">
+                  <td className="text-center">{candidate.img}</td>
                   <td className="text-center">{candidate.name}</td>
                   <td className="text-center">
                     <button
                       className={`btn btn-${selectedCandidate === candidate ? "primary" : "secondary"}`}
                       onClick={() => setSelectedCandidate(candidate)}
-                      aria-label={`Seleccionar a ${candidate.name}`}
                     >
                       {selectedCandidate === candidate ? "Seleccionado" : "Seleccionar"}
                     </button>
@@ -165,7 +164,7 @@ export default function ElectoralSurvey() {
         </div>
       </div>
 
-      <footer className="mt-5 text-center">
+      <footer className="mt-2 text-center">
         <a href="/privacy" target="_blank" rel="noopener noreferrer">
           Política de Privacidad
         </a>

@@ -1,6 +1,5 @@
 import React from "react";
 
-
 export default function PrivacyPolicy() {
   return (
     <div className="container mt-5">
@@ -9,7 +8,9 @@ export default function PrivacyPolicy() {
       </h1>
 
       <p>
-        Esta plataforma ha sido desarrollada con fines únicamente estadísticos y educativos. No representa ni está afiliada a ningún partido político, institución pública o privada.
+        Esta plataforma ha sido desarrollada con fines únicamente estadísticos y
+        educativos. No representa ni está afiliada a ningún partido político,
+        institución pública o privada.
       </p>
 
       <h2 className="text-xl font-semibold mt-4">1. Recolección de datos</h2>
@@ -19,18 +20,30 @@ export default function PrivacyPolicy() {
         <li>Edad</li>
         <li>Departamento de residencia</li>
       </ul>
-      <p>Estos datos se utilizan exclusivamente para fines de control de duplicidad y segmentación estadística.</p>
-
-      <h2 className="text-xl font-semibold mt-4">2. Uso de la información</h2>
       <p>
-        Los datos recopilados no se comparten con terceros ni se utilizan con fines publicitarios, comerciales o políticos.
-        La información se almacena de manera segura en un servidor privado con acceso restringido.
+        Estos datos se utilizan exclusivamente para fines de control de
+        duplicidad y segmentación estadística.
       </p>
 
-      <h2 className="text-xl font-semibold mt-4">3. Google AdSense y Cookies</h2>
+      <h2 className="text-xl font-semibold mt-4">2. Uso de la información</h2>
+      <p>✔ Esta encuesta es anónima.</p>
+      <p>✔ No recolectamos información personal como nombre o dirección.</p>
       <p>
-        Este sitio utiliza Google AdSense para mostrar anuncios relevantes. Google, como proveedor externo,
-        puede usar cookies para personalizar los anuncios mostrados. Puedes consultar su política en:
+        ✔ El número de C.I. es verificado para evitar votos duplicados, pero no
+        se almacena en ninguna base de datos pública.{" "}
+      </p>
+      <p>
+        ✔ No se comparte información con terceros ni se usa para publicidad
+        personalizada.
+      </p>
+
+      <h2 className="text-xl font-semibold mt-4">
+        3. Google AdSense y Cookies
+      </h2>
+      <p>
+        Este sitio utiliza Google AdSense para mostrar anuncios relevantes.
+        Google, como proveedor externo, puede usar cookies para personalizar los
+        anuncios mostrados. Puedes consultar su política en:
       </p>
       <a
         href="https://policies.google.com/privacy"
@@ -43,15 +56,20 @@ export default function PrivacyPolicy() {
 
       <h2 className="text-xl font-semibold mt-4">4. Consentimiento</h2>
       <p>
-        Al participar en esta encuesta, usted acepta voluntariamente los términos de esta política de privacidad.
+        Al participar en esta encuesta, usted acepta voluntariamente los
+        términos de esta política de privacidad.
       </p>
 
       <h2 className="text-xl font-semibold mt-4">5. Contacto</h2>
       <p>
-        Si tiene dudas o solicitudes sobre el tratamiento de datos, puede contactarnos a través del correo electrónico proporcionado en el sitio web.
+        Si tiene dudas o solicitudes sobre el tratamiento de datos, puede
+        contactarnos a través del correo electrónico proporcionado en el sitio
+        web.
       </p>
 
-      <p className="mt-4 text-sm text-center text-gray-500">Última actualización: mayo de 2025</p>
+      <p className="mt-4 text-sm text-center text-gray-500">
+        Última actualización: mayo de 2025
+      </p>
     </div>
   );
 }
