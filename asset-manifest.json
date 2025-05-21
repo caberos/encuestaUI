@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/encuestaui/static/css/main.e8a350ca.css",
+    "main.js": "/encuestaui/static/js/main.18475079.js",
+    "static/js/453.9c9308b0.chunk.js": "/encuestaui/static/js/453.9c9308b0.chunk.js",
+    "index.html": "/encuestaui/index.html",
+    "main.e8a350ca.css.map": "/encuestaui/static/css/main.e8a350ca.css.map",
+    "main.18475079.js.map": "/encuestaui/static/js/main.18475079.js.map",
+    "453.9c9308b0.chunk.js.map": "/encuestaui/static/js/453.9c9308b0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8a350ca.css",
+    "static/js/main.18475079.js"
+  ]
+}
