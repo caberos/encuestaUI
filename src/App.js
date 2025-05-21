@@ -8,7 +8,7 @@ import VoteResult from "./page/vote_result.jsx";
 
 function App() {
   return (
-      <BrowserRouter>
+      <BrowserRouter basename="encuestaui">
         <Routes>
                   <Route path="/" element={<ElectoralSurvey />} />
                   <Route path="/resultado" element={<VoteResult />} />
