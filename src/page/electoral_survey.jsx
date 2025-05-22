@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AdBanner from "../components/ad_banner.jsx";
 
 export default function ElectoralSurvey() {
   const navigate = useNavigate();
@@ -20,8 +19,16 @@ export default function ElectoralSurvey() {
   ];
 
   const cities = [
-    "La Paz", "El Alto", "Cochabamba", "Oruro", "Potosí", 
-    "Chuquisaca", "Tarija", "Beni", "Pando", "Santa Cruz"
+    "La Paz",
+    "El Alto",
+    "Cochabamba",
+    "Oruro",
+    "Potosí",
+    "Chuquisaca",
+    "Tarija",
+    "Beni",
+    "Pando",
+    "Santa Cruz",
   ];
 
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -32,7 +39,12 @@ export default function ElectoralSurvey() {
   });
 
   const handleVote = async () => {
-    if (!selectedCandidate || !voterData.ci || !voterData.age || !voterData.department) {
+    if (
+      !selectedCandidate ||
+      !voterData.ci ||
+      !voterData.age ||
+      !voterData.department
+    ) {
       alert("Por favor, complete todos los campos antes de votar.");
       return;
     }
@@ -66,16 +78,19 @@ export default function ElectoralSurvey() {
         Elecciones Generales Bolivia 2025
       </h1>
       <p className="text-center mt-2">
-        Esta encuesta busca reflejar la opinión ciudadana de forma anónima y sin afiliación política.
+        Esta encuesta busca reflejar la opinión ciudadana de forma anónima y sin
+        afiliación política.
       </p>
 
       <div className="alert alert-info mt-1">
         <h5>Sobre esta encuesta</h5>
         <p>
-          Esta es una simulación de encuesta pública sin fines partidarios. 
-          Los datos son recolectados con fines educativo, estadísticos y de análisis.
+          Esta es una simulación de encuesta pública sin fines partidarios. Los
+          datos son recolectados con fines educativo, estadísticos y de
+          análisis.
           <br />
-          No almacenamos datos personales identificables ni los usamos para publicidad.
+          No almacenamos datos personales identificables ni los usamos para
+          publicidad.
         </p>
       </div>
 
@@ -98,12 +113,15 @@ export default function ElectoralSurvey() {
                   <td className="text-center">{candidate.img}</td>
                   <td className="text-center">{candidate.name}</td>
                   <td className="text-center">
-                    <button
-                      className={`btn btn-${selectedCandidate === candidate ? "primary" : "secondary"}`}
-                      onClick={() => setSelectedCandidate(candidate)}
-                    >
-                      {selectedCandidate === candidate ? "Seleccionado" : "Seleccionar"}
-                    </button>
+                    <label>
+                      <input
+                        type="radio"
+                        name="candidate"
+                        value={candidate.name}
+                        checked={selectedCandidate?.name === candidate.name}
+                        onChange={() => setSelectedCandidate(candidate)}
+                      />
+                    </label>
                   </td>
                 </tr>
               ))}
@@ -115,43 +133,56 @@ export default function ElectoralSurvey() {
           <h2 className="text-xl font-semibold mb-2 text-center">
             Datos del Votante
           </h2>
-          <AdBanner />
 
           <div className="mb-3 w-75">
-            <label htmlFor="ci" className="form-label">C.I.</label>
+            <label htmlFor="ci" className="form-label">
+              C.I.
+            </label>
             <input
               type="text"
               id="ci"
               className="form-control text-center"
               value={voterData.ci}
-              onChange={(e) => setVoterData({ ...voterData, ci: e.target.value })}
+              onChange={(e) =>
+                setVoterData({ ...voterData, ci: e.target.value })
+              }
               placeholder="Número de Cédula"
             />
           </div>
 
           <div className="mb-3 w-75">
-            <label htmlFor="age" className="form-label">Edad</label>
+            <label htmlFor="age" className="form-label">
+              Edad
+            </label>
             <input
               type="number"
               id="age"
               className="form-control text-center"
               value={voterData.age}
-              onChange={(e) => setVoterData({ ...voterData, age: e.target.value })}
+              onChange={(e) =>
+                setVoterData({ ...voterData, age: e.target.value })
+              }
               placeholder="Edad"
             />
           </div>
 
           <div className="w-75">
-            <label htmlFor="department" className="form-label">Departamento</label>
+            <label htmlFor="department" className="form-label">
+              Departamento
+            </label>
             <select
               id="department"
               className="form-control text-center"
               value={voterData.department}
-              onChange={(e) => setVoterData({ ...voterData, department: e.target.value })}
+              onChange={(e) =>
+                setVoterData({ ...voterData, department: e.target.value })
+              }
             >
               <option value="">Selecciona una opción</option>
               {cities.map((city, index) => (
-                <option key={index} value={city}>{city}</option>
+                <option key={index} value={city}>
+                  {city}
+                </option>
               ))}
             </select>
           </div>
